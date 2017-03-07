@@ -1,0 +1,156 @@
+[
+  {
+    "name":"Oliva+Day+Cream",
+    "title":"Oliva BY CCS Day Cream橄榄补水保湿面霜 50毫升",
+    "category":"beauty",
+    "price":99,
+    "description":" <p><b>产品介绍:</b></p><p>Oliva 日霜含有有机橄榄成分，质感幼润细滑，能深入肌肤，被迅速吸收，帮助皮肤保持弹性和柔软性；并能滋养肌肤，去除细小皱纹。配方能增强肌肤天然防御能力，巩固肌肤的天然屏障，另肌肤得到全面保护。</p>",
+    "image":"/data/images/beauty/ccs_oliva_day_cream.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_day_cream.jpg"
+  },
+  {
+    "name":"Oliva+Cleansing＋Mousse",
+    "title":"Oliva BY CCS Cleansing Mousse橄榄洁面慕斯 150毫升",
+    "category":"beauty",
+    "price":79,
+    "description":"<p><b>产品介绍:</b></p><p>Oliva  橄榄洁面慕斯是一种温和的洁面摩丝，含有水溶性的油，天然橄榄油成分和蛋白质，为皮肤提供水分和养料。洁颜慕丝的pH值接近皮肤，适合所有皮肤类型。含有97％生物降解，&#8203;&#8203;为环保材料，不含矿物油，硅油和防腐剂。</p>",
+    "image":"/data/images/beauty/ccs_oliva_cleansing_mousse.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_cleansing_mousse.jpg"
+  },{
+    "name":"Oliva＋Hand＋Cream",
+    "title":"Oliva BY CCS Hand Cream橄榄护手霜 100毫升",
+    "category":"beauty",
+    "price":59,
+    "description":"<p><b>产品介绍:</b></p><p>Oliva护手霜含有有机橄榄油，乳木果油和甘油，使手部的角质层恢复其自然的柔软度。质地极度软滑能迅速渗透，发挥保护，滋养的作用。护手霜的香味为有机认证的成分。不含防腐剂。</p>",
+    "image":"/data/images/beauty/ccs_oliva_hand_cream.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_hand_cream.jpg"
+  },{
+    "name":"Oliva＋Face＋Toner",
+    "title":"Oliva BY CCS Face Toner橄榄面部爽肤水 200毫升",
+    "category":"beauty",
+    "price":79,
+    "description":"<p><b>产品介绍:</b></p><p>橄榄面部爽肤水是温和型的爽肤水，能清除皮肤最后的杂质，赋予肌肤清新焕发能力。爽肤水具有接近皮肤的pH值，各种皮肤适用。 含有天然的橄榄油萃取成分，蕴含丰富的抗氧化剂和保湿剂。不含矿物油，硅油和对羟基苯甲酸酯。</p>",
+    "image":"/data/images/beauty/ccs_oliva_face_toner.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_face_toner.jpg"
+  },{
+    "name":"Oliva＋Body＋Butter",
+    "title":"Oliva BY CCS Body Butter橄榄身体香膏220毫升",
+    "category":"beauty",
+    "price":69,
+    "description":"<p><b>产品介绍:</b></p><p>橄榄身体香膏使身体肌肤保水使其紧致柔软，保护肌肤免受有害的环境因素侵损。含有丰富的有机橄榄油，乳木果油，可可脂。</p>",
+    "image":"/data/images/beauty/ccs_oliva_body_butter.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_body_butter.jpg"
+  },{
+    "name":"Oliva＋ Shower＋Gel",
+    "title":"Oliva BY CCS Shower Gel 橄榄沐浴露 175毫升",
+    "category":"beauty",
+    "price":79,
+    "description":"<p><b>产品介绍:</b></p><p>蕴含天然橄榄精华，具有舒缓，保护，滋养与强化身体肌肤的作用，泡沫丰富细腻，温和洁净而不会带走肌肤天然水分。</p>",
+    "image":"/data/images/beauty/ccs_oliva_shower_gel.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_shower_gel.jpg"
+  },{
+    "name":"Oliva＋shampoo",
+    "title":"Oliva shampoo橄榄洗发水 250毫升",
+    "category":"beauty",
+    "price":98,
+    "description":"<p><b>产品介绍:</b></p><p>蕴含天然橄榄精华，很适合需要滋润和护理的干燥和受损发质，含维生素B5和有机橄榄油，甘油给予头发光泽。</p>",
+    "image":"/data/images/beauty/ccs_oliva_shampoo.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_shampoo.jpg"
+  },{
+    "name":"Oliva＋Hair＋Conditioner",
+    "title":"Oliva Hair Conditioner橄榄护发素 150毫升",
+    "category":"beauty",
+    "price":59,
+    "description":"<p><b>产品介绍:</b></p><p>此款有机护发素配合洗发水使用，可以使头发更有光泽，丰盈头发，平复毛糙，使头发充满活力。</p>",
+    "image":"/data/images/beauty/ccs_oliva_hair_conditioner.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_hair_conditioner.jpg"
+  },{
+    "name":"Oliva＋Eye＋Cream",
+    "title":"Oliva Eye Cream橄榄保湿去细纹眼霜 15毫升",
+    "category":"beauty",
+    "price":89,
+    "description":"<p><b>产品介绍:</b></p><p>此款有机眼霜是一个质地轻薄的眼霜，能有效减少细纹，缓解干燥，保护眼睛周围娇嫩的皮肤。含有橄榄油和角鲨烯，蕴含丰富的抗氧化剂和保湿剂。适合各类肤质。</p>",
+    "image":"/data/images/beauty/ccs_oliva_eye_cream.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_eye_cream.jpg"
+  },{
+    "name":"Oliva＋Sensitive＋Cleansing＋Mousse",
+    "title":"Oliva Sensitive Cleansing Mousse敏感肌肤橄榄洁面慕斯 150毫升",
+    "category":"beauty",
+    "price":99,
+    "description":"<p><b>产品介绍:</b></p><p>专为敏感肌肤设计的一种温和的面部洁面摩丝，让你的脸部瞬间干净，并提供了如丝般的感觉。含水溶性的有机橄榄油，洁颜慕丝的pH值接近皮肤，适合所有皮肤类型。含有97％生物降解，​​为环保材料，不含矿物油，硅油和防腐剂。</p>",
+    "image":"/data/images/beauty/ccs_oliva_sensitive_facial_cleansing_mousse.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_sensitive_facial_cleansing_mousse.jpg"
+  },{
+    "name":"Oliva＋Makeup＋Remover",
+    "title":"Oliva Make up Remover Wipes橄榄卸妆湿巾 24片",
+    "category":"beauty",
+    "price":59,
+    "description":"<p><b>产品介绍:</b></p><p>橄榄卸妆湿巾含有有机保湿橄榄油和角鲨烯，软化和滋润皮肤，温和而有效的清洁化妆过的皮肤。清洁效果显著，方便外出携带。</p>",
+    "image":"/data/images/beauty/ccs_oliva_makeup_remover.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_makeup_remover.jpg"
+  },{
+    "name":"Oliva＋facial＋mask",
+    "title":"Oliva mask橄榄保湿面膜 10毫升",
+    "category":"beauty",
+    "price":168,
+    "description":"<p><b>产品介绍:</b></p><p>这款面膜包含有机橄榄油和橄榄叶的加强抗氧化提取。另包含高岭土棉花蓟提取物—可以稳定和调节皮肤的水分平衡。帮助中性至干性肌肤重拾平衡和光彩。</p>",
+    "image":"/data/images/beauty/ccs_oliva_facial_mask.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_facial_mask.jpg"
+  },{
+    "name":"Oliva＋Intensive＋Moisturising＋Face＋Cream",
+    "title":"Oliva Eco Intensive Moisturising Face Cream 橄榄深层保湿面霜 75毫升(无香型）",
+    "category":"beauty",
+    "price":129,
+    "description":"<p><b>产品介绍:</b></p><p>OLIVA有机深层保湿面霜是一种无香料有机橄榄面霜。含有透明质酸能迅速补充水分，保持肌肤的弹性和柔软性。深层保湿面霜富含橄榄萃取精华和维生素E，经常使用有美白功效. 不含对羟基苯甲酸酯，矿物油和硅氧烷，无味配方。</p>",
+    "image":"/data/images/beauty/ccs_oliva_moisturising_face_cream.jpg",
+    "largeImage":"/data/images/beauty/ccs_oliva_moisturising_face_cream.jpg"
+  },{
+    "name":"Jabushe＋Original",
+    "title":"Jabushe Original嘉碧茜抗皱修复面霜(强效型) 50毫升",
+    "category":"beauty",
+    "price":449,
+    "description":"<p><b>产品介绍:</b></p><p>这是一种强效恢复皮肤弹性和光泽的抗皱霜。富含专利脂质复合体QAL-100用来对抗皱纹和老化或晒伤的皮肤。</p><p>Jabushe是瑞典生产的护肤品牌。主要成分是专利配方QAL-100。 Jabushe有抗衰老的作用以及修复老化及晒伤皮肤。该产品对皱纹有明显的效果，通常3-4周之内就会有一定的效果。建议搭配使用Jabushe洁面乳。</p><p><b>适合人群:</b></p><p>35岁以上。</p><p><b>使用方法:</b></p><p>初期一天使用一次至皮肤适应后每天早晚使用两次。根据需要一天涂抹数次。</p><p><b>严重敏感、红血丝肌肤，皮肤病患者慎用</b></p>",
+    "image":"/data/images/beauty/jabushe_original.jpg",
+    "largeImage":"/data/images/beauty/jabushe_original.jpg"
+  },{
+    "name":"Jabushe＋Soft",
+    "title":"Jabushe Soft嘉碧茜抗皱修复面霜(温和型) 50毫升",
+    "category":"beauty",
+    "price":228,
+    "description":"<p><b>产品介绍:</b></p><p>这是一款温和修复和恢复老化和受损的皮肤的抗皱早晚霜。是瑞典地区最受欢迎的抗皱霜之一。在使用后的几天内即有显著效果。</p><p>包含了全球专利QAL-100与硫辛酸，辅酶Q10和乙酰肉碱，使Jabushe区别于其他大多数化妆品具备渗透到皮肤深层的能力。</p><p>Jabushe是瑞典生产的护肤系列，具有抗衰老的作用，修复老化及晒伤皮肤。建议搭配使用Jabushe洁面乳。</p><p><b>适合人群:</b></p><p>适合25岁以上开始出现第一道细纹人群使用。</p><p><b>使用方法:</b></p><p>初期一天使用一次至皮肤适应后每天早晚使用两次。根据需要一天涂抹数次。</p><p><b>严重敏感、红血丝肌肤，皮肤病患者慎用</b></p>",
+    "image":"/data/images/beauty/jabushe_soft.jpg",
+    "largeImage":"/data/images/beauty/jabushe_soft.jpg"
+  },{
+    "name":"Jabushe＋Anti-Wrinkle＋Serum",
+    "title":"Jabushe Anti-Wrinkle Serum嘉碧茜面部抗皱精华液 15毫升",
+    "category":"beauty",
+    "price":189,
+    "description":"<p><b>产品介绍:</b></p><p>Jabushe抗皱精华素是一种使用于面部的精华素,减少随着年龄的增长或因日晒出现的皱纹。独特的精华液配方能舒缓表情纹(鱼尾纹和前额纹)并且重塑和增强皮肤的弹性。 </p><p>Jabushe抗皱精华露含脂质复合体QAL-100以及黄原胶,⾼分子胶,多肽等抗衰⽼成分,帮助肌肤留住胶原蛋白,使之富有光泽。涂抹Jabushe抗皱精华素前请彻底清洁你的脸部(每日两次,以达到完美的效果) 待肌肤吸收几分钟后,配套使⽤用您的昼/夜霜,例如Jabushe两款抗皱面霜。 </p>",
+    "image":"/data/images/beauty/jabushe_anti_wrinkle_serum.jpg",
+    "largeImage":"/data/images/beauty/jabushe_anti_wrinkle_serum.jpg"
+  },{
+    "name":"Jabushe＋Eye",
+    "title":"Jabushe Eye嘉碧茜抗皱滋养眼霜 15毫升",
+    "category":"beauty",
+    "price":189,
+    "description":"<p><b>产品介绍:</b></p><p>Jabushe是瑞典本地生产的护肤系列。其中主要成分含有专利配方QAL-100。该系列产品具有抗衰⽼的作用,能修复老化及晒伤皮肤。Jabushe对皱纹有明显的效果,通常3-4周之内就会有成效。</p><p>滋养眼霜对眼部细纹有明显的成效,并能防止新的细纹的出现。此款眼霜也适合皮肤较薄的眼睛周围,含有适中浓度的活性配⽅方QAL-100。 </p><p>推荐早晚使用,动作轻柔涂抹于眼睛周围。使用眼霜前,请彻底清洁皮肤,建议搭配使⽤Jabushe洁面乳。不能直接接触眼睛 。</p>",
+    "image":"/data/images/beauty/jabushe_eye.jpg",
+    "largeImage":"/data/images/beauty/jabushe_eye.jpg"
+  },{
+    "name":"Jabushe＋Eye+Lift+Serum",
+    "title":"Jabushe Eye Lift Serum嘉碧茜眼部紧肤精华液 15毫升",
+    "category":"beauty",
+    "price":229,
+    "description":"<p><b>产品介绍:</b></p><p>Jabushe眼部紧肤精华液对于消除眼部浮肿,黑眼圈有明显的作用。精华液能促进血液循环,并有镇静眼部肌肤的效果。其中含有适度的QAL-100,也包含EYESERYL(四胜肽眼丝氨肽)和干细胞。EYESERYL是四个天然氨基酸组成的肽,防止水分和皮肤弹性的损失。干细胞延缓衰老,增加皮肤自⾝干细胞的活力,原料来⾃于瑞⼠。</p><p>使⽤用眼部紧肤精华液每天早晚于洁净后的肌肤。使用食指在眼睛周围的皮肤轻轻按压。建议搭配使用Jabushe的两款抗皱面霜。避免与眼睛直接接触。 </p>",
+    "image":"/data/images/beauty/jabushe_eye_lift_serum.jpg",
+    "largeImage":"/data/images/beauty/jabushe_eye_lift_serum.jpg"
+  },{
+    "name":"Jabushe＋Cleansing+Lotion",
+    "title":"Jabushe Cleansing Lotion嘉碧茜抗皱美白洗⾯奶 125毫升",
+    "category":"beauty",
+    "price":149,
+    "description":"<p><b>产品介绍:</b></p><p>新配⽅ - 去除污垢更有效! Jabushe抗皱美白洗面奶是一种温和的清洁乳液,能溶解油脂,污垢及残妆。它能够深入清洁脸部肌肤。</p><p>Jabushe抗皱美白洗面奶含有⼩黄瓜萃取液,以达到平衡肌肤的功效,配方含有保湿因子,碧桃萃取精华和洋甘菊提取物，能够缓解紧绷的肌肤以达到镇静效果。 通常使用3-4周之内有效果。</p><p>不含矿物油和苯甲酸酯。</p><p><b>使用方法:</b></p><p>打湿⾯面部,将本品涂于脸上彻底按摩,再用温水冲洗干净。<b>注意:所有jabushe 产品不能经过阳光暴晒,出门前请使用防晒霜。</b></p>",
+    "image":"/data/images/beauty/jabushe_lotion.jpg",
+    "largeImage":"/data/images/beauty/jabushe_lotion.jpg"
+  }
+]
