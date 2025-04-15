@@ -6,10 +6,8 @@ categories: C#
 ---
 
 ### C# .NET Core HowTos
-#### 1. **C# .NET Core how to build a todo list web app with user authentication and authorization**
-
-- install .NET Core SDK
-- create a new project
+#### 1. create a new project
+- open a terminal and run the following command to create a new web application
 ```bash
 dotnet new webapp -n TodoListApp
 ```
@@ -17,12 +15,20 @@ dotnet new webapp -n TodoListApp
 ```bash
 cd TodoListApp
 ```
-- add authentication
+#### 2. dependency management
+
 ```bash
+dotnet restore
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Design --version=8.0.13
+dotnet add package Microsoft.EntityFrameworkCore.Relational --version 8.0.13
+dotnet add package Pomelo.EntityFrameworkCore.MySql
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 ```
-- create a file named `appsettings.json` in the root directory and add the following content
+
+#### 3. Configuration
+
+- configuration: create a file named `appsettings.json` in the root directory and add the following content
 ```json
 {
   "ConnectionStrings": {
@@ -35,56 +41,41 @@ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
   }
 }
 ```
-- create a file which is for db context and name it `ApplicationDbContext.cs` in the `Data` folder
-```csharp
-// using will be ignored
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
 
-    public DbSet<TodoItem> TodoItems { get; set; }
-}
+
+#### 4. Project Structure
+- create the following folders in the root directory
 ```
-- create a file which is for the todo item model and name it `TodoItem.cs` in the `Models` folder
-```csharp
-// using will be ignored
-public class TodoItem
-{
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public bool IsCompleted { get; set; }
-}
-```
-- create a file which is for the todo controller and name it `TodoController.cs` in the `Controllers` folder
-```csharp
-// using will be ignored
-[Route("api/[controller]")]
-[ApiController]
-public class TodoController : ControllerBase
-{
-    private readonly ApplicationDbContext _context;
-
-    public TodoController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
-    {
-        return await _context.TodoItems.ToListAsync();
-    }
-
-    [HttpGet("{id}")]
-    public async 
-}
+TodoListApp
+├── Controllers
+├── Data
+├── Models
+├── Services
+├── Migrations
+├── wwwroot
+└── Views
 ```
 
+#### 5. Dependency Injection and Configuration
+- configure interface and implementation in `Startup.cs`, say `IUserService` and `UserService`
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
 
+    // scoped means one instance per request
+    services.AddScoped<IUserService, UserService>(); 
 
+    // singleton means one instance for the whole application
+    // services.AddSingleton<IUserService, UserService>();
+    // transient means one instance per injection
+    // services.AddTransient<IUserService, UserService>();
+    // Add framework services.
+    
+    services.AddControllersWithViews();
+}
+```
+    
 
 
 
