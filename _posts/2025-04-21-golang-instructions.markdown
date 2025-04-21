@@ -23,7 +23,8 @@ go get github.com/gorilla/sessions
 ```
 #### 3. database with sqlc
 - create a file named `sqlc.yaml` in the root directory and add the following content
-```yaml
+
+```yml
 version: "2"
 sql:
   - engine: "postgresql"
