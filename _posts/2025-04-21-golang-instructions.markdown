@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Golang Instructions"
-date:   2025-04-21 21:16:02 +0200
+date:   2025-04-20 21:16:02 +0200
 categories: Golang
 ---
 ### Golang Instructions
@@ -51,10 +51,12 @@ CREATE TABLE devices (
 ```
 - create a file named `query.sql` in the root directory and add the following content
 ```sql
--- name: CreateDevice
+-- name: CreateDevice :one
 INSERT INTO devices (name, credentials) VALUES ($1, $2) RETURNING id;
--- name: GetDevice
+-- name: GetDevice :one
 SELECT * FROM devices WHERE id = $1;
+-- name: ListDevices :many
+SELECT * FROM devices;
 ```
 - run the following command to generate the code
 ```bash
@@ -62,17 +64,10 @@ sqlc generate
 ```
 #### 4. Project Structure
 - create the following folders in the root directory
+mkdir -p TodoListApp/internal/{config,controller,dto,repository,service}
 ```
-TodoListApp
-├── cmd
-├── internal
-├── pkg
-├── api
-├── config
-├── db
-├── middleware
-├── routes
-├── utils
-├── vendor
-└── main.go
+
+#### 5. openapi spec
+```bash
+swag init -g main.go
 ```
