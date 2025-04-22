@@ -15,12 +15,10 @@ go mod tidy
 ```bash
 cd TodoListApp
 ```
-#### 2. dependency management
-```bash
-go get github.com/gorilla/mux
-go get github.com/gorilla/handlers
-go get github.com/gorilla/sessions
-```
+#### 2. dependency injection
+
+please refer to [this post]({% post_url 2025-04-20-golang-wire-denpendency-injection %}).
+
 #### 3. database with sqlc
 - create a file named `sqlc.yaml` in the root directory and add the following content
 
@@ -68,7 +66,46 @@ sqlc generate
 mkdir -p TodoListApp/internal/{config,controller,dto,repository,service}
 ```
 
-#### 5. openapi spec
+#### 5. OpenAPI spec
 ```bash
 swag init -g main.go
+```
+
+```go
+// @Summary Add a new law document
+// @Description Create a new law document with the provided details
+// @Tags documents
+// @Accept json
+// @Param document body repository.CreateDocumentParams true "Document details"
+// @Produce json
+// @Success 201 {object} map[string]interface{} "Document created"
+// @Failure 400 {object} map[string]interface{} "Invalid input"
+// @Failure 500 {object} map[string]interface{} "Failed to create document"
+// @Router /api/v1/docs [post]
+import (
+_ "github.com/wilbyang/ubiq-monitor/docs"
+swaggerFiles "github.com/swaggo/files"
+ginSwagger "github.com/swaggo/gin-swagger"
+)
+r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+```
+
+#### 6. Tracing & Metrics
+```go
+"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+  var (
+	counter = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "file_upload_total",
+			Help: "Total number of file uploads",
+		},
+		[]string{"doctype", "priority"},
+	)
+)
+
+func init() {
+	prometheus.MustRegister(counter)
+}
+api.router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 ```
