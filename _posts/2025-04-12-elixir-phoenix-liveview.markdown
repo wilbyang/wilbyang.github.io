@@ -5,11 +5,11 @@ date:   2025-04-12 21:16:02 +0200
 categories: Elixir
 ---
 
-# 使用 Elixir 和 Phoenix LiveView 构建实时应用
+
 
 Phoenix LiveView 是 Phoenix 框架的一个扩展，允许你构建实时、交互式的用户界面而无需编写 JavaScript。下面我将带你从零开始学习使用 LiveView。
 
-## 1. 环境准备
+### 1. 环境准备
 
 首先确保你已经安装了 Elixir 和 Phoenix：
 
@@ -32,7 +32,7 @@ brew install elixir
 mix archive.install hex phx_new
 ```
 
-## 2. 创建新项目
+### 2. 创建新项目
 
 创建一个新的 Phoenix 项目（包含 LiveView）：
 
@@ -41,34 +41,52 @@ mix phx.new my_live_app --live
 cd my_live_app
 ```
 
-## 3. 基本 LiveView 结构
+### 3. 基本 LiveView 结构
 
 一个基本的 LiveView 模块通常包含以下几个部分：
 
 ```elixir
-defmodule MyLiveAppWeb.CounterLive do
-  use MyLiveAppWeb, :live_view
+defmodule HandsDirty2Web.Live.Counter do
+  use HandsDirty2Web, :live_view
+  @topic "counter"
 
   def mount(_params, _session, socket) do
+    if connected?(socket), do: HandsDirty2Web.Endpoint.subscribe(@topic)
+
     {:ok, assign(socket, count: 0)}
   end
 
   def handle_event("increment", _, socket) do
-    {:noreply, update(socket, :count, &(&1 + 1))}
+    new_count = socket.assigns.count + 1
+    HandsDirty2Web.Endpoint.broadcast_from(self(), @topic, "update", %{count: new_count})
+    {:noreply, assign(socket, count: new_count)}
+  end
+
+  def handle_event("decrement", _, socket) do
+    new_count = socket.assigns.count - 1
+    HandsDirty2Web.Endpoint.broadcast_from(self(), @topic, "update", %{count: new_count})
+    {:noreply, assign(socket, count: new_count)}
+  end
+
+  def handle_info(%{topic: @topic, payload: %{count: new_count}}, socket) do
+    {:noreply, assign(socket, count: new_count)}
   end
 
   def render(assigns) do
-    ~H"""
+    ~L"""
     <div>
       <h1>Count: <%= @count %></h1>
+      <button phx-click="decrement">-</button>
       <button phx-click="increment">+</button>
     </div>
     """
   end
+
 end
+
 ```
 
-## 4. 路由配置
+### 4. 路由配置
 
 在 `lib/my_live_app_web/router.ex` 中添加 LiveView 路由：
 
@@ -76,7 +94,7 @@ end
 live "/counter", CounterLive
 ```
 
-## 5. 运行应用
+### 5. 运行应用
 
 启动 Phoenix 服务器：
 
@@ -86,13 +104,13 @@ mix phx.server
 
 访问 `http://localhost:4000/counter` 你应该能看到计数器应用。
 
-## 6. 核心概念
+### 6. 核心概念
 
-### Socket 和状态管理
+#### Socket 和状态管理
 
 LiveView 通过 socket 维护状态。`assign/2` 和 `update/3` 是常用的状态管理函数。
 
-### 事件处理
+#### 事件处理
 
 使用 `phx-click`, `phx-change` 等属性绑定事件：
 
@@ -106,7 +124,7 @@ def handle_event("increment", _, socket) do
 end
 ```
 
-### 实时表单
+#### 实时表单
 
 LiveView 提供了强大的表单支持：
 
@@ -123,9 +141,9 @@ def handle_event("save", %{"user" => user_params}, socket) do
 end
 ```
 
-## 7. 高级功能
+### 7. 高级功能
 
-### PubSub 实时更新
+#### PubSub 实时更新
 
 ```elixir
 # 在某个地方发布消息
@@ -143,7 +161,7 @@ def handle_info({:message, data}, socket) do
 end
 ```
 
-### 上传文件
+#### 上传文件
 
 LiveView 支持文件上传：
 
@@ -163,7 +181,7 @@ end
 """
 ```
 
-## 8. 测试 LiveView
+### 8. 测试 LiveView
 
 Phoenix 提供了 LiveView 测试工具：
 
@@ -177,16 +195,16 @@ test "increments count", %{conn: conn} do
 end
 ```
 
-## 9. 部署
+### 9. 部署
 
 部署 LiveView 应用需要确保 WebSocket 连接正常工作。如果你使用 Phoenix 1.7+，默认配置已经处理好了这一点。
 
-## 学习资源
+### 学习资源
 
 1. [官方文档](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
 2. [Phoenix LiveView 课程](https://pragmaticstudio.com/phoenix-liveview)
 3. [LiveView 示例应用](https://github.com/chrismccord/phoenix_live_view_example)
 
-希望这个指南能帮助你开始使用 Phoenix LiveView！如果有任何具体问题或想深入了解某个方面，请随时提问。
+
 
 
