@@ -1,0 +1,323 @@
+---
+layout: post
+title:  "gRPC"
+date:   2025-05-01 21:16:02 +0200
+categories: gRPC
+---
+
+# gRPC Streaming 的使用场景
+
+gRPC 提供了三种 streaming 模式，每种模式适用于不同的应用场景：
+
+## 1. 服务端流式 (Server-side Streaming RPC)
+
+**模式**：客户端发送单个请求，服务端返回一个流式响应。
+
+**适用场景**：
+- **大数据集传输**：当服务端需要返回大量数据时，可以分块流式传输
+  - 例如：导出大量数据库记录
+  - 例如：传输大型文件
+
+- **实时通知/推送**：服务端持续推送更新
+  - 例如：股票价格实时更新
+  - 例如：新闻推送
+  - 例如：IoT 设备状态监控
+
+- **长耗时操作**：需要持续返回进度的操作
+  - 例如：后台任务执行进度报告
+  - 例如：数据分析结果分批返回
+
+**示例**：
+```protobuf
+service StockService {
+  rpc GetStockPrices (StockRequest) returns (stream StockPrice) {}
+}
+```
+
+## 2. 客户端流式 (Client-side Streaming RPC)
+
+**模式**：客户端发送流式请求，服务端返回单个响应。
+
+**适用场景**：
+- **大数据上传**：客户端需要上传大量数据
+  - 例如：日志批量上传
+  - 例如：文件上传
+
+- **聚合操作**：客户端发送多个数据后需要聚合结果
+  - 例如：传感器数据批量上传后计算平均值
+  - 例如：多个数据点上传后执行批量处理
+
+- **节省连接开销**：避免为每个小消息建立新连接
+  - 例如：聊天应用中的消息发送
+
+**示例**：
+```protobuf
+service LogService {
+  rpc UploadLogs (stream LogEntry) returns (UploadResult) {}
+}
+```
+
+## 3. 双向流式 (Bidirectional Streaming RPC)
+
+**模式**：客户端和服务端都可以发送流式消息。
+
+**适用场景**：
+- **实时交互应用**：需要双向持续通信
+  - 例如：聊天应用
+  - 例如：多人游戏
+  - 例如：协作编辑工具
+
+- **复杂控制流程**：需要交替发送控制消息和数据
+  - 例如：视频会议中的音视频流和控制信号
+  - 例如：远程终端/SSH 会话
+
+- **协商协议**：需要多轮交互才能完成的操作
+  - 例如：复杂事务处理
+  - 例如：协议握手和参数协商
+
+**示例**：
+```protobuf
+service ChatService {
+  rpc Chat (stream ChatMessage) returns (stream ChatMessage) {}
+}
+```
+
+## 何时选择 Streaming 而非 Unary RPC
+
+1. **数据量大**：当请求或响应数据太大，不适合一次性传输时
+2. **实时性要求高**：需要低延迟的持续数据更新时
+3. **资源效率**：避免频繁建立/断开连接的开销
+4. **自然流式数据**：数据本质上是流式的（如音视频流）
+5. **长生命周期操作**：操作需要持续一段时间并需要中间状态更新
+
+## 实际应用案例
+
+1. **视频流服务**：
+   - 客户端流式上传视频片段
+   - 服务端流式返回处理结果或转码后的视频
+
+2. **金融交易平台**：
+   - 双向流式传输实时交易指令和确认
+
+3. **物联网平台**：
+   - 设备通过客户端流式上传传感器数据
+   - 服务端流式下发控制命令
+
+4. **在线协作工具**：
+   - 双向流式同步用户编辑操作
+
+## 性能考虑
+
+- Streaming 可以减少 TCP 连接建立的开销
+- 更有效地利用网络带宽（避免小包问题）
+- 减少内存压力（不需要缓冲整个请求/响应）
+- 但需要更复杂的连接管理和错误处理
+
+选择是否使用 streaming 应根据具体业务需求和数据特性来决定，而不是简单地认为 streaming 总是更好。
+
+# gRPC 拦截器的适用场景
+
+gRPC 拦截器(Interceptor)是一种强大的中间件机制，可以在请求被处理前或响应被返回前插入自定义逻辑。以下是需要使用拦截器的典型场景：
+
+## 1. 认证与授权
+
+**适用场景**：
+- 验证客户端身份（JWT、OAuth2、API Key等）
+- 检查权限和访问控制（RBAC、ABAC）
+- 限制特定用户/服务的访问
+
+**实现示例**：
+```go
+func AuthInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    // 从metadata中提取token
+    md, ok := metadata.FromIncomingContext(ctx)
+    if !ok {
+        return nil, status.Errorf(codes.Unauthenticated, "missing credentials")
+    }
+    
+    // 验证token
+    authHeader, ok := md["authorization"]
+    if !ok || len(authHeader) == 0 {
+        return nil, status.Errorf(codes.Unauthenticated, "authorization token required")
+    }
+    
+    if !isValidToken(authHeader[0]) {
+        return nil, status.Errorf(codes.PermissionDenied, "invalid token")
+    }
+    
+    return handler(ctx, req)
+}
+```
+
+## 2. 日志记录
+
+**适用场景**：
+- 记录请求/响应元数据
+- 记录方法调用耗时
+- 审计日志
+
+**实现示例**：
+```go
+func LoggingInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    start := time.Now()
+    
+    // 调用实际处理程序
+    resp, err := handler(ctx, req)
+    
+    // 记录日志
+    log.Printf("Method: %s, Duration: %s, Error: %v", 
+        info.FullMethod, 
+        time.Since(start), 
+        err)
+    
+    return resp, err
+}
+```
+
+## 3. 监控与指标收集
+
+**适用场景**：
+- 收集RPC调用次数、成功率等指标
+- 监控方法调用延迟
+- 集成Prometheus等监控系统
+
+**实现示例**：
+```go
+func MetricsInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    start := time.Now()
+    
+    // 增加请求计数器
+    metrics.RequestCounter.WithLabelValues(info.FullMethod).Inc()
+    
+    resp, err := handler(ctx, req)
+    
+    // 记录延迟
+    metrics.LatencyHistogram.WithLabelValues(info.FullMethod).Observe(time.Since(start).Seconds())
+    
+    if err != nil {
+        metrics.ErrorCounter.WithLabelValues(info.FullMethod).Inc()
+    }
+    
+    return resp, err
+}
+```
+
+## 4. 错误处理与重试
+
+**适用场景**：
+- 统一错误处理逻辑
+- 实现自动重试机制
+- 错误转换和标准化
+
+**实现示例**：
+```go
+func RetryInterceptor(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+    var lastErr error
+    for i := 0; i < maxRetries; i++ {
+        err := invoker(ctx, method, req, reply, cc, opts...)
+        if err == nil {
+            return nil
+        }
+        
+        if isRetriable(err) {
+            lastErr = err
+            time.Sleep(backoff(i))
+            continue
+        }
+        
+        return err
+    }
+    return lastErr
+}
+```
+
+## 5. 请求/响应转换
+
+**适用场景**：
+- 请求参数验证
+- 响应数据包装/解包
+- 数据格式转换
+
+**实现示例**：
+```go
+func ValidationInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    if v, ok := req.(validator); ok {
+        if err := v.Validate(); err != nil {
+            return nil, status.Errorf(codes.InvalidArgument, "invalid request: %v", err)
+        }
+    }
+    return handler(ctx, req)
+}
+```
+
+## 6. 限流与熔断
+
+**适用场景**：
+- 限制请求速率
+- 实现熔断机制
+- 负载均衡控制
+
+**实现示例**：
+```go
+func RateLimitInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    if !limiter.Allow() {
+        return nil, status.Errorf(codes.ResourceExhausted, "rate limit exceeded")
+    }
+    return handler(ctx, req)
+}
+```
+
+## 7. 链路追踪
+
+**适用场景**：
+- 分布式追踪
+- 上下文传播
+- 调用链分析
+
+**实现示例**：
+```go
+func TracingInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    span, ctx := opentracing.StartSpanFromContext(ctx, info.FullMethod)
+    defer span.Finish()
+    
+    // 注入追踪信息到metadata
+    if err := injectTraceID(ctx); err != nil {
+        log.Printf("failed to inject trace ID: %v", err)
+    }
+    
+    return handler(ctx, req)
+}
+```
+
+## 8. 超时控制
+
+**适用场景**：
+- 统一设置或调整超时时间
+- 防止长时间运行的请求
+
+**实现示例**：
+```go
+func TimeoutInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+    ctx, cancel := context.WithTimeout(ctx, defaultTimeout)
+    defer cancel()
+    
+    return handler(ctx, req)
+}
+```
+
+## 拦截器类型选择
+
+1. **UnaryInterceptor**：用于普通的一元RPC调用
+2. **StreamInterceptor**：用于流式RPC调用
+3. **客户端拦截器**：在客户端发起请求前处理
+4. **服务端拦截器**：在服务端处理请求前处理
+
+## 最佳实践
+
+1. **保持拦截器轻量**：避免在拦截器中执行耗时操作
+2. **明确职责**：每个拦截器只关注一个特定功能
+3. **注意执行顺序**：拦截器按照注册顺序执行
+4. **合理处理错误**：确保错误信息对客户端友好
+5. **考虑性能影响**：监控拦截器对性能的影响
+
+拦截器是gRPC中实现横切关注点(Cross-Cutting Concerns)的理想方式，可以避免将这些逻辑混入业务代码中，保持代码的整洁和可维护性。
