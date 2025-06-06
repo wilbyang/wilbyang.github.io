@@ -199,11 +199,6 @@ end
 
 部署 LiveView 应用需要确保 WebSocket 连接正常工作。如果你使用 Phoenix 1.7+，默认配置已经处理好了这一点。
 
-### 学习资源
-
-1. [官方文档](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
-2. [Phoenix LiveView 课程](https://pragmaticstudio.com/phoenix-liveview)
-3. [LiveView 示例应用](https://github.com/chrismccord/phoenix_live_view_example)
 
 
 
