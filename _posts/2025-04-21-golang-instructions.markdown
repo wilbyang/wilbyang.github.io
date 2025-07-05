@@ -5,7 +5,7 @@ date:   2025-04-20 21:16:02 +0200
 categories: Golang
 ---
 ### Golang Instructions
-#### 1. create a new project
+#### create a new project
 - open a terminal and run the following command to create a new web application
 ```bash
 go mod init TodoListApp
@@ -15,24 +15,29 @@ go mod tidy
 ```bash
 cd TodoListApp
 ```
+#### Project Structure 
+- create the following folders in the root directory
+```bash
+mkdir -p TodoListApp/internal/{config,controller,dto,repository,service}
+```
 
-#### 2. dependency injection
+#### dependency injection
 
-please refer to [this post]({% post_url 2025-04-20-golang-wire-denpendency-injection %}).
+please refer to [this post]({% post_url 2025-04-21-golang-wire-dependency-injection %}).
 
-#### 3. database with sqlc
+#### database with sqlc
 - create a file named `sqlc.yaml` in the root directory and add the following content
 
 ```yml
 version: "2"
 sql:
-  - engine: "postgresql"
+  - engine: "postgresql" # mysql, sqlite
     queries: "query.sql"
     schema: "schema.sql"
     gen:
       go:
-        package: "tutorial"
-        out: "tutorial"
+        package: "entity"
+        out: "internal/db"
         sql_package: "pgx/v5"
         emit_json_tags: true
         overrides:
@@ -62,12 +67,46 @@ SELECT * FROM devices;
 ```bash
 sqlc generate
 ```
-#### 4. Project Structure
-- create the following folders in the root directory
-mkdir -p TodoListApp/internal/{config,controller,dto,repository,service}
+
+### use the sqlc generated code
+
+```go
+
+package main
+
+import (
+	"context"
+	"log"
+
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/wilbyang/gotmp/dto"
+	"github.com/wilbyang/gotmp/tutorial"
+)
+
+func main() {
+	ctx := context.Background()
+	dbpool, err := pgxpool.New(ctx, "postgres://boya:@localhost:28813/device_monitor")
+	if err != nil {
+		panic(err)
+	}
+	defer dbpool.Close()
+	queries := tutorial.New(dbpool)
+	queries.CreateDevice(context.Background(), tutorial.CreateDeviceParams{
+		Name: "test_device",
+		Credentials: dto.Credentials{
+			Username: "test_user",
+			Password: "test_pass",
+		},
+	})
+	if err != nil {
+		log.Fatalf("failed to create device: %v", err)
+	}
+}
+
 ```
 
-#### 5. OpenAPI spec
+
+#### OpenAPI spec
 ```bash
 swag init -g main.go
 ```
@@ -91,11 +130,11 @@ ginSwagger "github.com/swaggo/gin-swagger"
 r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 ```
 
-#### 6. Tracing & Metrics
+#### Tracing & Metrics
 ```go
 "github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-  var (
+"github.com/prometheus/client_golang/prometheus/promhttp"
+var (
 	counter = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "file_upload_total",
@@ -109,4 +148,25 @@ func init() {
 	prometheus.MustRegister(counter)
 }
 api.router.GET("/metrics", gin.WrapH(promhttp.Handler()))
+```
+
+#### GRPC
+- create a folder named `proto` in the root directory and add the following content
+
+```bash
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/device.proto
+```
+
+- server 
+
+```go
+"google.golang.org/grpc/reflection"
+reflection.Register(grpcServer)
+```
+
+- client test
+
+
+```bash
+grpcurl -plaintext -d '{"device_identifier": "device"}' localhost:8082 device.monitoring.DeviceMonitoringService/CheckHealth
 ```
